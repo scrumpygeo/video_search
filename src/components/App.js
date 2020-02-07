@@ -8,6 +8,11 @@ require("dotenv").config();
 class App extends React.Component {
   state = { videos: [], selectedVideo: null };
 
+  // set default video to load
+  componentDidMount() {
+    this.onTermSubmit("ships");
+  }
+
   onTermSubmit = async term => {
     // callback for when we submit search term to child component SearchBar
     // now we can call preconfigured instance of axios we called youtube
@@ -17,7 +22,10 @@ class App extends React.Component {
       }
     });
 
-    this.setState({ videos: response.data.items });
+    this.setState({
+      videos: response.data.items,
+      selectedVideo: response.data.items[0]
+    });
   };
 
   onVideoSelect = video => {
